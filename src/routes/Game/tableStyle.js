@@ -1,5 +1,8 @@
-const Width=window.screen.width;
+// const Width=window.screen.width;
 const Height=window.screen.height;
+const Width=document.body.clientWidth;
+// const Height=document.body.clientHeight;
+// const Height=document.body.scrollHeight;
 export default{
     table:{
         width: Width,

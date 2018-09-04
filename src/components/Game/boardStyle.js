@@ -1,4 +1,5 @@
-const Width=window.screen.width;
+// const Width=window.screen.width;
+const Width=document.body.clientWidth;
 
 export default {
     board: {

@@ -1,4 +1,6 @@
-const Width=window.screen.width;
+// const Width=window.screen.width;
+const Width=document.body.clientWidth;
+// const Height=document.height;
 
 export default{
 right: {

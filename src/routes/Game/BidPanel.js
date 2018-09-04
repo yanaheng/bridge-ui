@@ -11,7 +11,8 @@ let css1 = {
 class BidPanel extends Component {
     constructor(props) {
         super(props)
-        this.width = window.screen.width;
+        // this.width = window.screen.width;
+        this.width=document.body.clientWidth;
         const suits = ['NT', 'S', 'H', 'D', 'C'];
         const rank = [1, 2, 3, 4, 5, 6, 7];
         const bids = rank.map((i) => suits.map((j) => i + j))

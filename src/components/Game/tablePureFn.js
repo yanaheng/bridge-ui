@@ -3,8 +3,10 @@ import Sound from './Sound'
 
 class tablePureFn {
     constructor(){
-        this.width = window.screen.width;
-        this.height = window.screen.height;
+        // this.width = window.screen.width;
+        // this.height = window.screen.height;
+        this.width=document.body.clientWidth;
+        // this.height=document.body.clientHeight;
         this._csize=null;
         this.seats=null;
         this.offset = this.csize * 0.7 / 2;
