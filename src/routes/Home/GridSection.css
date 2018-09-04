@@ -1,0 +1,8 @@
+.am-grid-item-content{
+    padding:5px !important; /*修改 默认间距*/
+}
+
+.am-list-item img{
+    width:60px;
+    height:60px;
+}
