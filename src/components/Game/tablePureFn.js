@@ -166,9 +166,9 @@ class tablePureFn {
      * 叫牌
      */
     call = (calldata,bid,seat) =>{
-        if(calldata.length===0){
+        if(calldata.length===0 || calldata[calldata.length-1].indexOf(null)===-1){
             calldata.push(Array(4).fill(null))
-            calldata[0][0] = bid.name
+            calldata[calldata.length-1][0] = bid.name
         }else{
             const index = calldata[calldata.length-1].indexOf(null)
             console.log(index)
