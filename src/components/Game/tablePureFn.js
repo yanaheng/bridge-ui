@@ -88,7 +88,8 @@ class tablePureFn {
                         seat: tablePureFn.direction[index1],       // 这张牌是那个方位的
                         size: this.csize,                // 牌的大小
                         card: s[i] + suits[index2],
-                        position: { x: this.width / 2, y: this.width * 2 }     // 考虑一个默认位置。
+                        position: { x: this.width / 2, y: this.width * 2 },     // 考虑一个默认位置。
+                        state: 1,   // 1：未出牌，2：出牌，3：清空，
                     })
                 }
             });
@@ -179,20 +180,49 @@ class tablePureFn {
     /**
      * 出牌
      */
-    playCard=(cards,card,seats)=>{
+    playCard=(cards,card,seats,fn)=>{
         const seatIndex = tablePureFn.direction.indexOf(card.seat);
         let rotate = 0;
-        let [x, y] = [seats[card.seat][1].x, seats[card.seat][1].y]
+        let [x1, y1] = [seats[card.seat][1].x, seats[card.seat][1].y]
+        let [x0, y0] = [seats[card.seat][0].x, seats[card.seat][0].y]
         if ('13'.indexOf(seatIndex) !== -1) rotate = -90;
-        x = x + this.width / 16 / 5; y = y + this.width / 16 / 5; // margin
+        x1 = x1 + this.width / 16 / 5; y1 = y1 + this.width / 16 / 5; // margin
+        x0 = x0 + this.width / 16 / 5; y0 = y0 + this.width / 16 / 5; // margin
         cards[seatIndex].forEach((item,index)=>{
             if(item.index===card.index){
-                this.dealOneCard(item,x,y,rotate,0)
+                this.dealOneCard(item,x1,y1,rotate,0,fn);
+                item.state=2
                 item.zIndex = this.zindex++;
+            }
+            if(item.index!==card.index && item.state===1){
+                this.dealOneCard(item,x0,y0,rotate,0,fn)
+                if ('13'.indexOf(seatIndex) !== -1) y0 = y0 + this.csize * 0.15;
+                else x0 = x0 + this.csize * 0.39;
             }
         })
         Sound.play('play');
         return cards
+    }
+    /**
+    *   清空当前board的4张牌
+    *   问题：不能加延时
+    */
+    clearBoard=(currentTrick,lastTrick)=>{
+        currentTrick.map(item=>{
+            lastTrick.push(item)
+            this.moveToPlayed(item)
+        })
+    }
+    /**
+     * 将牌放到已出牌区
+     */
+    moveToPlayed=(item)=>{
+        item.animation.left = this.width / 2;
+        item.animation.top = -this.width * 2;
+        item.animation.delay = 0
+        item.zindex= this.zindex++;
+        item.active = 3;
+        item.state=3
     }
     /**
      * 将牌与图片相对应
@@ -211,6 +241,7 @@ class tablePureFn {
                     size={item2.size}
                     position={item2.position}
                     zIndex={item2.zIndex}
+                    state={item2.state}
                 />
             });
         });

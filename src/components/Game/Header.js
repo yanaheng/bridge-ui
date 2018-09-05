@@ -2,7 +2,6 @@
 import style from './Header.css'
 
 const ImpsHeader=({imps})=>{
-    console.log(imps)
     return(
         <div className={style.imps}>
             <div className={style.iheader}>IMPs</div>

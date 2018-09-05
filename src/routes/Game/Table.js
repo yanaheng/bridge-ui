@@ -25,13 +25,13 @@ class Table extends Component{
         this.props.dispatch({
             type:'game/init',
             seats: seats,
-            playCard: this.playCard
+            playCardFn: this.playCard
         })
     }
     playCard=(card)=>{
         return ()=>{
             this.props.dispatch({
-                type: 'game/playCard',
+                type: 'game/playOneCard',
                 card: card,
             })
         }
@@ -42,7 +42,6 @@ class Table extends Component{
     dealCards=()=>{
         this.props.dispatch({
             type: 'game/dealCards',
-            playCard: this.playCard
         })
     }
     showDummy=(seat)=>{
